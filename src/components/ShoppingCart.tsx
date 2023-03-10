@@ -1,4 +1,4 @@
-import { Space, Table, Button } from 'antd';
+import { Space, Table, Button, Popconfirm } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 
 export type ProductModel = {
@@ -56,39 +56,18 @@ export default function ShoppingCart({ data, onCheckout }: ShoppingCartProps) {
           dataSource={data?.products}
           size='middle'
           pagination={false}
-          //   summary={(data: any) => {
-          //     const items =
-          //       data && data.length > 0
-          //         ? data?.reduce(
-          //             (c: ProductModel, p: ProductModel) => c.amount + p.amount
-          //           )
-          //         : 0;
-          //     const totalPrice =
-          //       data && data.length > 0
-          //         ? data?.reduce(
-          //             (c: ProductModel, p: ProductModel) =>
-          //               c.amount * c.unitPrice + p.amount * p.amount
-          //           )
-          //         : 0;
-          //     return (
-          //       <Table.Summary fixed>
-          //         <Table.Summary.Row>
-          //           <Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
-          //           <Table.Summary.Cell index={1}>{items}</Table.Summary.Cell>
-          //           <Table.Summary.Cell index={2}>
-          //             {totalPrice ? totalPrice : 0}
-          //           </Table.Summary.Cell>
-          //         </Table.Summary.Row>
-          //       </Table.Summary>
-          //     );
-          //   }}
         />
         <p>{data?.totalItems} item(s) </p>
         <p>Total price: {data?.totalPrice.toFixed(2)} </p>
         {data && data.products.length > 0 && (
-          <Button type='primary' onClick={handleCheckout}>
-            Checkout
-          </Button>
+          <Popconfirm
+            title='Checkout'
+            description='Proceed checkout?'
+            onConfirm={handleCheckout}
+            okText='Yes'
+          >
+            <Button type='primary'>Checkout</Button>
+          </Popconfirm>
         )}
       </Space>
     </div>
